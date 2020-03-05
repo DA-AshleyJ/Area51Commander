@@ -23,7 +23,6 @@ namespace Area51Commander
         private readonly Config _config;
         private readonly string _prefix = "$";
 
-
         public StreamMusicBotClient()
         {
             _client = new DiscordSocketClient(new DiscordSocketConfig
@@ -43,7 +42,6 @@ namespace Area51Commander
             _configService = new ConfigService();
             _config = _configService.GetConfig();
         }
-
         public async Task InitializeAsync()
         {
             await _client.LoginAsync(TokenType.Bot, _config.Token);
@@ -56,6 +54,7 @@ namespace Area51Commander
             await _services.GetRequiredService<MusicService>().InitializeAsync();
             await Task.Delay(-1);
             _client.MessageReceived += OnMessageReceivedAsync;
+            
         }
        
         private async Task OnMessageReceivedAsync(SocketMessage s)
@@ -87,6 +86,5 @@ namespace Area51Commander
             .AddSingleton<HelpModule>()
             .BuildServiceProvider();
     }
-
 }
 

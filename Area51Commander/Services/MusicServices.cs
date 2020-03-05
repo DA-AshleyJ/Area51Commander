@@ -58,6 +58,7 @@ namespace Area51Commander.Services
             {
                 await _player.PlayAsync(track);
                 return $"Now Playing: {track.Title}";
+
             }
         }
 

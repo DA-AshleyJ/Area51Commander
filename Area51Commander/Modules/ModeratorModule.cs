@@ -28,15 +28,17 @@ namespace Area51Commander.Modules
                 Title = "User Kick Initiated"
             };
             builder.WithCurrentTimestamp();
-            builder.WithAuthor("Area51 Commander");
+            var Auther = new EmbedAuthorBuilder()
+                .WithName("Area51 Commander")
+                .WithIconUrl("https://i.imgur.com/xqfHEin.png");
+            builder.WithAuthor(Auther);
             builder.WithFooter($"Initiated by {user.Username}");
 
-            ulong one = 523289109633040394;
+            ulong one = 683859016631320591;
             await Context.Guild.GetTextChannel(one).SendMessageAsync("", false, builder.Build());
             await user.Guild.AddBanAsync(user, reason: reason);
             await user.KickAsync();
         }
-
         [Command("Ban")]
         [Summary("Ban the specific User.")]
         [RequireUserPermission(GuildPermission.BanMembers)]
@@ -50,13 +52,15 @@ namespace Area51Commander.Modules
                 Title = "User Ban Initiated"
             };
             builder.WithCurrentTimestamp();
-            builder.WithAuthor("Area51 Commander");
+            var Auther = new EmbedAuthorBuilder()
+                .WithName("Area51 Commander")
+                .WithIconUrl("https://i.imgur.com/xqfHEin.png");
+            builder.WithAuthor(Auther);
             builder.WithFooter($"Initiated by {user.Username}");
 
-            ulong one = 523289109633040394;
+            ulong one = 678241085180346368;
             await Context.Guild.GetTextChannel(one).SendMessageAsync("", false, builder.Build());
             await user.Guild.AddBanAsync(user, reason: reason);
-
         }
         [Command("Purge")]
         [Summary("Downloads and removes X messages from the current channel.")]
@@ -91,7 +95,11 @@ namespace Area51Commander.Modules
                 Color = new Color(114, 137, 218),
                 Description = text
             };
-            ulong one = 468308144045686795;
+            var Auther = new EmbedAuthorBuilder()
+    .WithName("Area51 Commander")
+    .WithIconUrl("https://i.imgur.com/xqfHEin.png");
+            builder.WithAuthor(Auther);
+            ulong one = 683859016631320591;
             Context.Guild.GetTextChannel(one).SendMessageAsync("", false, builder.Build());
             return ReplyAsync("Post preview:", false, builder.Build());
         }

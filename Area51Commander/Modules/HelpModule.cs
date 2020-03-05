@@ -10,12 +10,9 @@ namespace Area51Commander.Modules
     public class HelpModule : ModuleBase<SocketCommandContext>
     {
         private readonly CommandService _service;
-      
-
         public HelpModule(CommandService service)
         {
             _service = service;
- 
         }
         [Command("Help")]
         [Summary("This help box!")]
@@ -29,7 +26,10 @@ namespace Area51Commander.Modules
                 Title = "Help",
 
             };
-            builder.WithAuthor("Area51 Commander");
+            var Auther = new EmbedAuthorBuilder()
+                .WithName("Area51 Commander")
+                .WithIconUrl("https://i.imgur.com/xqfHEin.png");
+            builder.WithAuthor(Auther);
             builder.WithFooter("Created by Ashley Johnson - 1¡LuCkY√#5492");
 
             foreach (var module in _service.Modules)
@@ -41,23 +41,17 @@ namespace Area51Commander.Modules
                     var result = await cmd.CheckPreconditionsAsync(Context);
                     if (result.IsSuccess)
                         description += $"```{prefix}{cmd.Aliases.First()}```" + $" {cmd.Summary}\n";
-
                 }
-
                 if (!string.IsNullOrWhiteSpace(description))
                 {
                     builder.AddField(x =>
                     {
-
                         x.Name = module.Name;
                         x.Value = description + Summary;
                         x.IsInline = false;
-
-
                     });
                 }
             }
-
             await ReplyAsync("", false, builder.Build());
         }
 

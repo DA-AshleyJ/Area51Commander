@@ -14,7 +14,6 @@ namespace Area51Commander.Modules
         {
             _musicService = musicService;
         }
-
         [Command("Join")]
         [Summary("This tells the Music service bot to join the channel.")]
         public async Task Join()
@@ -22,16 +21,37 @@ namespace Area51Commander.Modules
             var user = Context.User as SocketGuildUser;
             if (user.VoiceChannel is null)
             {
-                await ReplyAsync("You need to connect to a voice channel.");
+                var builder = new EmbedBuilder()
+                {
+                    Color = new Color(189, 16, 224),
+                    Description = $"```You need to connect to a voice channel.```",
+                    Title = "Command"
+                };
+                builder.WithCurrentTimestamp();
+                var Auther = new EmbedAuthorBuilder()
+                    .WithName("Area51 Commander")
+                    .WithIconUrl("https://i.imgur.com/xqfHEin.png");
+                builder.WithAuthor(Auther);
+                await ReplyAsync("",false,builder.Build());
                 return;
             }
             else
             {
+                var builder = new EmbedBuilder()
+                {
+                    Color = new Color(189, 16, 224),
+                    Description = $"```Now connected to {user.VoiceChannel.Name}```",
+                    Title = "Command"
+                };
+                builder.WithCurrentTimestamp();
+                var Auther = new EmbedAuthorBuilder()
+                    .WithName("Area51 Commander")
+                    .WithIconUrl("https://i.imgur.com/xqfHEin.png");
+                builder.WithAuthor(Auther);
                 await _musicService.ConnectAsync(user.VoiceChannel, Context.Channel as ITextChannel);
-                await ReplyAsync($"now connected to {user.VoiceChannel.Name}");
+                await ReplyAsync("",false,builder.Build());
             }
         }
-
         [Command("Leave")]
         [Summary("This tells the Music service bot to leave the channel.")]
         public async Task Leave()
@@ -39,12 +59,35 @@ namespace Area51Commander.Modules
             var user = Context.User as SocketGuildUser;
             if (user.VoiceChannel is null)
             {
-                await ReplyAsync("Please join the channel the bot is in to make it leave.");
+                var builder = new EmbedBuilder()
+                {
+                    Color = new Color(189, 16, 224),
+                    Description = $"```Please join the channel the bot is in to make it leave.```",
+                    Title = "Command"
+                };
+                builder.WithCurrentTimestamp();
+                var Auther = new EmbedAuthorBuilder()
+                    .WithName("Area51 Commander")
+                    .WithIconUrl("https://i.imgur.com/xqfHEin.png");
+                builder.WithAuthor(Auther);
+                await ReplyAsync("", false, builder.Build());
+                return;              
             }
             else
             {
                 await _musicService.LeaveAsync(user.VoiceChannel);
-                await ReplyAsync($"Bot has now left {user.VoiceChannel.Name}");
+                var builder = new EmbedBuilder()
+                {
+                    Color = new Color(189, 16, 224),
+                    Description = $"```Bot has now left {user.VoiceChannel.Name}```",
+                    Title = "Command"
+                };
+                builder.WithCurrentTimestamp();
+                var Auther = new EmbedAuthorBuilder()
+                    .WithName("Area51 Commander")
+                    .WithIconUrl("https://i.imgur.com/xqfHEin.png");
+                builder.WithAuthor(Auther);
+                await ReplyAsync("", false, builder.Build());
             }
         }
 
@@ -52,7 +95,6 @@ namespace Area51Commander.Modules
         [Summary("This tells the Music service bot to play a song that you request.")]
         public async Task Play([Remainder]string query)
             => await ReplyAsync(await _musicService.PlayAsync(query, Context.Guild.Id));
-
 
         [Command("Stop")]
         [Summary("This tells the Music service bot to stop playing music.")]
